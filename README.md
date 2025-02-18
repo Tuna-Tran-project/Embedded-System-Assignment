@@ -3,7 +3,7 @@ Here is a requirements document for a **Smart Parking System Using RFID**:
 
 ---
 
-# **Smart Parking System Using RFID **  
+# Smart Parking System Using RFID 
 
 ## **1. Introduction**  
 ### **1.1 Purpose**  
