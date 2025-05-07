@@ -1,11 +1,11 @@
 
 # Embedded-System-Assignment
 
-Here is a requirements document for a **Checking Attendance Using RFID**:
+Here is a requirements document for a **Attendance check-in usingg ESP32 Controlled RFID**:
 
 ---
 
-# Checking Attendance Using RFID
+# Attendance check-in usingg ESP32 Controlled RFID
 
 ## **1. Introduction**
 
@@ -28,32 +28,28 @@ The system will:
 
 ### **2.1 Student Registration and Tag Assignment**
 
-* The system shall allow administrators to register students and assign each one a unique RFID tag.
-* The system shall store student details including name, ID number, class, and RFID tag ID.
+* The system allow administrators to register students and assign each one a unique RFID tag.
+* The system can store student details including name, ID number, class, and RFID tag ID.
 
 ### **2.2 Attendance Detection via RFID**
 
-* The system shall use an RFID reader installed at the classroom entrance.
-* When a student with a valid RFID tag enters the classroom, the system shall detect the tag and mark the student as **present**.
-* The system shall log the **check-in time**.
-* If a student checks in after a predefined time threshold, the system shall mark the student as **late**.
-* The system shall ignore duplicate scans from the same tag during one session.
+* The system use an RFID reader installed at the classroom entrance.
+* When a student with a valid RFID tag enters the classroom, save the time check-in in Excel
 
 ### **2.3 Teacher/Admin Interface**
 
-* The system shall allow teachers or admins to view a **list of present, late, and absent students**.
-* The system shall allow exporting attendance data in formats such as CSV or Excel.
-* The system shall provide functionality to manually override attendance in case of tag failure.
+* The system allow teachers or admins to view a **list of present, late, and absent students**.
+* The system allow exporting attendance data in Excel.
+* The system provide functionality to manually override attendance in case of tag failure.
 
 ### **2.4 Real-time Notifications**
 
-* The system shall optionally send email or SMS notifications to parents in case of absence or lateness.
-* The system shall notify teachers in real-time via display or dashboard.
+* The system shall notify teachers and students in real-time via OLED.
+  
+### **2.5 Excel Database**
 
-### **2.5 Server Database**
+* All attendance data shall be stored in a Excel file.
 
-* All attendance data shall be stored in a structured SQL database.
-* The system shall support backups and data recovery.
 
 ---
 
@@ -63,11 +59,7 @@ The system will:
 
 * The RFID reader shall detect and log a student tag within **1 second**.
 * The system shall be able to handle **at least 50 students** arriving simultaneously without failure.
-
-### **3.2 Security**
-
-* The system shall encrypt stored student data and restrict access to authorized personnel only.
-* Unauthorized tag scans shall be logged and flagged.
+* The system should use Battery for Portable purpose.
 
 ### **3.3 Reliability and Availability**
 
@@ -94,7 +86,7 @@ The system will:
 | **Buzzer / LED**                | Signal success or failure during scanning                            |
 | **Push Buttons**                | Manual override, reset, or mode switching (optional)                 |
 | **Wi-Fi or Ethernet Module**    | Built-in (ESP32) or external module for communication with server    |
-| **Power Supply**                | 5V regulated supply for MCU and reader module                        |
+| **Power Supply**                | 5V power supply for MCU and reader module, 12V battery                       |
 
 ---
 
