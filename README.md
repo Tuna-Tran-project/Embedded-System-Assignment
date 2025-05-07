@@ -1,81 +1,123 @@
+
 # Embedded-System-Assignment
-Here is a requirements document for a **Smart Parking System Using RFID**:  
+
+Here is a requirements document for a **Checking Attendance Using RFID**:
 
 ---
 
-# Smart Parking System Using RFID 
+# Checking Attendance Using RFID
 
-## **1. Introduction**  
-### **1.1 Purpose**  
-The purpose of this document is to define the functional and non-functional requirements for a **Smart Parking System** that uses **Radio Frequency Identification (RFID)** technology to automate vehicle entry, exit, and parking fee management.  
+## **1. Introduction**
 
-### **1.2 Scope**  
-The system will:  
-- Automate vehicle identification using RFID tags and readers.  
-- Provide security and access control.  
+### **1.1 Purpose**
 
----
+The purpose of this document is to define the functional and non-functional requirements for a system that uses **Radio Frequency Identification (RFID)** technology to automate the process of checking student attendance. The system is intended to replace manual roll-calling methods with a faster, more accurate, and contactless alternative.
 
-## **2. Functional Requirements**  
+### **1.2 Scope**
 
-### **2.1 User Registration and Authentication**  
-- The system shall allow vehicle owners to register their vehicles by assigning unique RFID tags.  
-- The system shall store user details such as vehicle number, owner information.  
+The system will:
 
-### **2.2 RFID-Based Vehicle Detection**  
-- The RFID reader at the entrance shall detect and authenticate the vehicle’s RFID tag.  
-- If the vehicle is registered, the barrier gate shall automatically open.  
-- The system shall log the **entry time** and assign a parking slot.  
-- The RFID reader at the exit shall detect the vehicle's RFID tag and log the **exit time**.  
-
-### **2.2 Security and Access Control**  
-- The system shall prevent unauthorized vehicles from entering.  
-- The system shall maintain an audit log of all entries and exits.  
-- The system shall integrate CCTV cameras for additional security.  
-
-### **2.6 Server Database**  
-- All information about user vehicles is stored in SQL database 
+* Automate student attendance recording using RFID tags and readers.
+* Provide real-time tracking and logging of attendance records.
+* Generate reports and alerts for absent or late students.
+* Allow administrators and teachers to monitor attendance via a web interface or local display.
 
 ---
 
-## **3. Non-Functional Requirements**  
+## **2. Functional Requirements**
 
-### **3.1 Performance**  
-- The RFID reader shall detect and process a vehicle within **2 seconds**.  
-- The system shall handle up to **500 concurrent vehicles** in large parking lots.  
+### **2.1 Student Registration and Tag Assignment**
 
-### **3.2 Security**  
-- Unauthorized access attempts shall trigger alerts.  
+* The system shall allow administrators to register students and assign each one a unique RFID tag.
+* The system shall store student details including name, ID number, class, and RFID tag ID.
 
-### **3.3 Reliability and Availability**  
-- The RFID tags shall be weather-resistant and last at least **5 years**.  
+### **2.2 Attendance Detection via RFID**
 
-### **3.4 Maintainability and Scalability**  
-- The system shall allow **easy integration** with existing parking infrastructure.  
-- The system shall be **scalable** to support additional parking lots and users.  
+* The system shall use an RFID reader installed at the classroom entrance.
+* When a student with a valid RFID tag enters the classroom, the system shall detect the tag and mark the student as **present**.
+* The system shall log the **check-in time**.
+* If a student checks in after a predefined time threshold, the system shall mark the student as **late**.
+* The system shall ignore duplicate scans from the same tag during one session.
+
+### **2.3 Teacher/Admin Interface**
+
+* The system shall allow teachers or admins to view a **list of present, late, and absent students**.
+* The system shall allow exporting attendance data in formats such as CSV or Excel.
+* The system shall provide functionality to manually override attendance in case of tag failure.
+
+### **2.4 Real-time Notifications**
+
+* The system shall optionally send email or SMS notifications to parents in case of absence or lateness.
+* The system shall notify teachers in real-time via display or dashboard.
+
+### **2.5 Server Database**
+
+* All attendance data shall be stored in a structured SQL database.
+* The system shall support backups and data recovery.
 
 ---
 
-## **4. Hardware and Software Requirements**  
+## **3. Non-Functional Requirements**
 
-### **4.1 Hardware Components**  
-- **RFID Tags** – Passive UHF RFID tags for vehicle identification.  
-- **RFID Readers** – Fixed UHF RFID readers installed at entry and exit points.  
-- **Barrier Gates** – Automated gates controlled by the system.   
-- **OLED Display Panels** – For showing parking slot availability.  
+### **3.1 Performance**
 
-### **4.2 Software Components**  
-- **Backend System** – Database management, user authentication.
-- **Web Database** – Admin dashboard for monitoring and reporting.  
+* The RFID reader shall detect and log a student tag within **1 second**.
+* The system shall be able to handle **at least 50 students** arriving simultaneously without failure.
+
+### **3.2 Security**
+
+* The system shall encrypt stored student data and restrict access to authorized personnel only.
+* Unauthorized tag scans shall be logged and flagged.
+
+### **3.3 Reliability and Availability**
+
+* The system shall achieve **99% uptime** during school hours.
+* The RFID hardware should support **at least 100,000 scans** before replacement.
+
+### **3.4 Maintainability and Scalability**
+
+* The system shall allow administrators to add new classes, students, or devices without code changes.
+* The design shall support integration into larger school management systems.
 
 ---
 
-## **5. Assumptions and Constraints**  
-- Vehicles must have an RFID tag installed for automatic entry/exit.  
-- The system requires stable **internet connectivity** for real-time updates.  
+## **4. Hardware and Software Requirements**
+
+### **4.1 Hardware Requirements**
+
+| Component                       | Description                                                          |
+| ------------------------------- | -------------------------------------------------------------------- |
+| **Microcontroller Unit (MCU)**  | ESP32 / Arduino Uno / STM32 to interface with RFID reader and server |
+| **RFID Reader Module**          | MFRC522 or compatible HF reader for scanning RFID tags               |
+| **RFID Tags**                   | Passive RFID cards (13.56 MHz), one per student                      |
+| **OLED/LCD Display (Optional)** | Display attendance status or messages to student/teacher             |
+| **Buzzer / LED**                | Signal success or failure during scanning                            |
+| **Push Buttons**                | Manual override, reset, or mode switching (optional)                 |
+| **Wi-Fi or Ethernet Module**    | Built-in (ESP32) or external module for communication with server    |
+| **Power Supply**                | 5V regulated supply for MCU and reader module                        |
+
 ---
 
-## **6. Conclusion**  
-The **Smart Parking System using RFID** aims to **streamline vehicle entry and enhance security**, providing a seamless parking experience for users and efficient management for parking operators.  
+### **4.2 Software Requirements**
+
+| Software Component       | Description                                                               |
+| ------------------------ | ------------------------------------------------------------------------- |
+| **Embedded Firmware**    | Code to control RFID reader, read tags, and send data via serial or Wi-Fi |
+| **Database System**      | MySQL / PostgreSQL to store attendance records and student info           |
+| **Web Server / Backend** | Python Flask / Node.js / PHP to receive data and serve dashboard          |
+| **Admin Dashboard**      | Web interface for teachers/admin to view reports and student records      |
+| **Notification Module**  | Optional integration with email (SMTP) or SMS (Twilio/Firebase) APIs      |
+| **Driver Libraries**     | RFID and Wi-Fi libraries compatible with the chosen microcontroller       |
+
+---
+
+## **5. Assumptions and Constraints**
+
+* Each student must carry their assigned RFID tag during class time.
+* RFID readers must be installed and powered near classroom entrances.
+* The system assumes that only one student enters at a time for accurate scan.
+* A stable **Wi-Fi or LAN connection** is required for real-time data sync and notifications.
+* The RFID reader’s range is assumed to be **<10 cm** to prevent misreads.
+* The school must ensure physical security of hardware to prevent tampering.
 
 ---
